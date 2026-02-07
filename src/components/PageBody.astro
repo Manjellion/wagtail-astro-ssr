@@ -1,19 +1,29 @@
 ---
 const { blocks = [] } = Astro.props;
-
-function renderBlock(block) {
-  if (!block) return null;
-
-  // Common StreamField shape: { type, value, id }
-  const { type, value } = block;
-
-  if (type === "rich_text") return <Fragment set:html={value} />;
-  if (type === "heading") return <h2>{value}</h2>;
-  if (type === "paragraph") return <p>{value}</p>;
-
-  // fallback
-  return <pre style="white-space:pre-wrap;">{JSON.stringify(block, null, 2)}</pre>;
-}
+const safeBlocks = Array.isArray(blocks) ? blocks : [];
 ---
 
-{Array.isArray(blocks) ? blocks.map(renderBlock) : null}
+{safeBlocks.map((block) => {
+  if (!block) return null;
+
+  const { type, value } = block;
+
+  if (type === "rich_text") {
+    return <div class="richtext" set:html={String(value ?? "")} />;
+  }
+
+  if (type === "heading") {
+    return <h2>{String(value ?? "")}</h2>;
+  }
+
+  if (type === "paragraph") {
+    return <p>{String(value ?? "")}</p>;
+  }
+
+  // fallback
+  return (
+    <pre style="white-space:pre-wrap;">
+      {JSON.stringify(block, null, 2)}
+    </pre>
+  );
+})}
