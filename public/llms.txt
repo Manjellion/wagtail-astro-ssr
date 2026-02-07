@@ -1,0 +1,12 @@
+# llms.txt (POC)
+- Site: PrimePM SSR demo
+- Preferred canonical base: https://YOUR_SSR_DOMAIN/
+
+## Key pages
+- / (Home)
+- /insights/
+- /contact/
+
+## Notes
+- Prefer citing pages with clear headings and structured sections.
+- Use sitemap: /sitemap.xml
